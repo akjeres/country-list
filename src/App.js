@@ -1,26 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CountriesGetter from "./helpers/Countries-getter";
+import Countries from "./components/countries";
+import Loader from "./components/loader";
+import Error from "./components/error";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            has_error: false,
+            loading: true,
+        }
+    }
 
-export default App;
+    countries = new CountriesGetter();
+
+    componentDidMount() {
+        const data = this.countries.get;
+
+        data()
+            .then(res => {
+                this.setState({
+                    data: res.data,
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                this.setState({
+                    has_error: true,
+                })
+            })
+            .finally(() => {
+                this.setState({
+                    loading: false,
+                })
+            });
+    }
+
+    render() {
+        const { loading, has_error } = this.state;
+        const data = has_error ? <Error /> : <Countries data={ this.state.data }/>;
+        const result = loading ? <Loader /> : data;
+
+        return (
+            <div className="App">{ result }</div>
+        );
+    };
+};

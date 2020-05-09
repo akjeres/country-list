@@ -1,0 +1,6 @@
+.countries {
+    background-color: red;
+}
+.countries > .children {
+    padding-left: 0;
+}

@@ -1,0 +1,7 @@
+.children {
+    background-color: blue;
+    padding-left: 10px;
+}
+.children > .children {
+    display: none;
+}
