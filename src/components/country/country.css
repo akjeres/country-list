@@ -1,7 +1,27 @@
 .children {
-    background-color: blue;
-    padding-left: 10px;
+    margin: 0 auto;
 }
 .children > .children {
     display: none;
+}
+.children .children {
+    padding: 0 15px;
+}
+.children > .parent + div {
+    margin-top: 16px;
+    border: 1px solid #333;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    padding: 8px 0;
+    background-color: rgba(222, 164, 120, 0.1);
+    position: relative;
+}
+.children > .parent + div:before {
+    content: '';
+    width: 1px;
+    height: 24px;
+    background-color: #333;
+    position: absolute;
+    top: -24px;
+    left: 32px;
 }

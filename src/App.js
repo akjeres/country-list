@@ -1,4 +1,5 @@
 import React from 'react';
+import "./App.css";
 import CountriesGetter from "./helpers/Countries-getter";
 import Countries from "./components/countries";
 import Loader from "./components/loader";
@@ -16,9 +17,10 @@ export default class App extends React.Component {
     countries = new CountriesGetter();
 
     componentDidMount() {
+        const request_body = "{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  continents {\\n    code\\n    name\\n    countries {\\n      code\\n      name\\n      languages {\\n        code\\n        name\\n      }\\n    }\\n  }\\n}\\n\"}";
         const data = this.countries.get;
 
-        data()
+        data(request_body)
             .then(res => {
                 this.setState({
                     data: res.data,

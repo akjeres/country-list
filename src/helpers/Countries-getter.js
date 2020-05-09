@@ -1,8 +1,8 @@
 export default class CountriesGetter {
     _base = 'https://countries.trevorblades.com';
 
-    get = async (url = this._base) => {
-        const res = await fetch(url, {
+    get = async (body) => {
+        const res = await fetch(this._base, {
             "headers": {
                 "accept": "*/*",
                 "accept-language": "ru,en-US;q=0.9,en;q=0.8,uk;q=0.7",
@@ -13,15 +13,15 @@ export default class CountriesGetter {
                 "sec-fetch-mode": "cors",
                 "sec-fetch-site": "same-origin"
             },
-            "referrer": "https://countries.trevorblades.com/",
+            "referrer": this._base,
             "referrerPolicy": "no-referrer-when-downgrade",
-            "body": "{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  continents {\\n    code\\n    name\\n    countries {\\n      code\\n      name\\n      languages {\\n        code\\n        name\\n      }\\n    }\\n  }\\n}\\n\"}",
+            "body": body,
             "method": "POST",
             "mode": "cors"
         });
 
         if (!res.ok) {
-            throw new Error(`Could not fetch ${url}, received ${res.status}`);
+            throw new Error(`Could not fetch ${this._base}, received ${res.status}`);
         }
 
         return res.json();
