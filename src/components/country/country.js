@@ -6,11 +6,15 @@ export default class Country extends React.Component {
     constructor({ item, collapsed }) {
         super();
 
-        this.children_tags = (item.children || []).map(item => {
-            return <Country key={ item.id } item={ item } collapsed={ true }/>
+        let children_property_name = Object.keys(item).filter(i => {
+            return ('code' !== i) && ('name' !== i);
+        })[0];
+
+        this.children_tags = (item[children_property_name] || []).map(i => {
+            return <Country key={ i.code } item={ i } collapsed={ collapsed }/>;
         });
 
-        this.state = { collapsed };
+        this.state = { collapsed: collapsed || item[children_property_name].length };
     };
 
     handleClick(e) {
