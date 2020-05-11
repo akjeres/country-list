@@ -1,8 +1,9 @@
 import React from "react";
 import './country.css';
 import Button from "../button";
+import AppContext from "../../AppContext";
 
-export default class Country extends React.Component {
+class Country extends React.Component {
     constructor({ item, collapsed }) {
         super();
 
@@ -10,20 +11,20 @@ export default class Country extends React.Component {
             return ('code' !== i) && ('name' !== i);
         })[0];
 
-        this.children_tags = (item[children_property_name] || []).map(i => {
-            return <Country key={ i.code } item={ i } collapsed={ collapsed }/>;
-        });
-
         this.state = { collapsed: collapsed || item[children_property_name].length };
+
+        this.children_tags = (item[children_property_name] || []).map(i => {
+            return <Country key={ i.code } item={ i } collapsed={ collapsed } />;
+        });
     };
 
     handleClick(e) {
-        console.log(e.target);
-        const { collapsed } = this.state;
-        this.setState({
-            collapsed: !collapsed
-        });
+        this.context.toggleCollapse(this);
     };
+
+    componentDidMount() {
+        this.context.nodes.push(this);
+    }
 
 
     render() {
@@ -42,3 +43,6 @@ export default class Country extends React.Component {
         );
     };
 }
+Country.contextType = AppContext;
+
+export default Country;

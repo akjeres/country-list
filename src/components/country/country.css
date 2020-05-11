@@ -19,9 +19,9 @@
 .children > .parent + div:before {
     content: '';
     width: 1px;
-    height: 24px;
+    height: 16px;
     background-color: #333;
     position: absolute;
-    top: -24px;
+    top: -17px;
     left: 32px;
 }
